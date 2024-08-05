@@ -1,10 +1,26 @@
 App\Document\Feed:
     attributes:
-        id:
+        id: 
             groups: ['feed']
-        title_es:
+        title_es: 
             groups: ['feed']
-        description_es:
+        description_es: 
             groups: ['feed']
-        city:
+        city: 
+            groups: ['feed']
+        price_amount: 
+            groups: ['feed']
+        country: 
+            groups: ['feed']
+        video: 
+            groups: ['feed']
+        image_0: 
+            groups: ['feed']
+        image_1: 
+            groups: ['feed']
+        image_2: 
+            groups: ['feed']
+        image_3: 
+            groups: ['feed']
+        image_4: 
             groups: ['feed']

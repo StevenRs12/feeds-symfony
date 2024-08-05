@@ -18,32 +18,34 @@ class FeedsController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 10);
+        $country = $request->query->get('country');
         $offset = ($page - 1) * $limit;
-    
+
         $total = $documentManager->createQueryBuilder(Feed::class)
             ->count()
             ->getQuery()
             ->execute();
         $totalPages = ceil($total / $limit);
-    
+
         if ($page < 1 || $page > $totalPages) {
             return new JsonResponse([
                 'error' => 'Page not found',
-            ], JsonResponse::HTTP_NOT_FOUND); 
+            ], JsonResponse::HTTP_NOT_FOUND);
         }
-    
-        $feeds = $documentManager->getRepository(Feed::class)
-            ->findBy([], null, $limit, $offset);
-    
+
+        $feeds = $country ? $documentManager->getRepository(Feed::class)
+            ->findBy(['country' => $country], null, $limit, $offset) : $documentManager->getRepository(Feed::class)
+                ->findBy([], null, $limit, $offset);
+
         $data = $serializer->serialize($feeds, 'json', ['groups' => 'feed']);
-    
+
         $meta = [
             'page' => $page,
             'limit' => $limit,
             'total' => $total,
             'totalPages' => $totalPages
         ];
-    
+
         return new JsonResponse([
             'data' => json_decode($data, true),
             'meta' => $meta

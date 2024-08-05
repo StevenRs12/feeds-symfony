@@ -21,10 +21,12 @@ class FeedsController extends AbstractController
         $country = $request->query->get('country');
         $offset = ($page - 1) * $limit;
 
-        $total = $documentManager->createQueryBuilder(Feed::class)
-            ->count()
-            ->getQuery()
-            ->execute();
+        $qb = $documentManager->createQueryBuilder(Feed::class);
+        if ($country) {
+            $qb->field('country')->equals($country);
+        }
+        $total = $qb->count()->getQuery()->execute();
+
         $totalPages = ceil($total / $limit);
 
         if ($page < 1 || $page > $totalPages) {
@@ -52,3 +54,4 @@ class FeedsController extends AbstractController
         ], JsonResponse::HTTP_OK);
     }
 }
+

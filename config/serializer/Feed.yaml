@@ -1,0 +1,10 @@
+App\Document\Feed:
+    attributes:
+        id:
+            groups: ['feed']
+        title_es:
+            groups: ['feed']
+        description_es:
+            groups: ['feed']
+        city:
+            groups: ['feed']
